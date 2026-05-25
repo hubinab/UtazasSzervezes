@@ -1,0 +1,25 @@
+﻿<Window x:Class="UtazasSzervezesGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UtazasSzervezesGUI"
+        mc:Ignorable="d"
+        Title="Megrendelési adatok" Height="450" Width="450">
+    <Grid Margin="15,0,15,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Megrendelők" Grid.Row="0" Grid.Column="0" Margin="0,0,0,15"/>
+        <ComboBox x:Name="cb1" Grid.Row="0" Grid.Column="1" SelectionChanged="cb1_SelectionChanged" Margin="0,0,0,15"/>
+        <Label Content="Megrendelők" Grid.Row="1" Grid.Column="0" Margin="0,0,0,15"/>
+        <ComboBox x:Name="cb2" Grid.Row="1" Grid.Column="1" SelectionChanged="cb2_SelectionChanged" Margin="0,0,0,15"/>
+        <ListBox x:Name="lb1" Grid.Row="2" Grid.ColumnSpan="2"/>
+    </Grid>
+</Window>
