@@ -16,4 +16,6 @@ public partial class Uticel
     public virtual Idegenvezeto Idegenvezeto { get; set; } = null!;
 
     public virtual ICollection<Utaza> Utazas { get; set; } = new List<Utaza>();
+
+    public int OsszUtazas => Utazas.Count * Idotartam;
 }

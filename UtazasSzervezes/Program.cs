@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Repo.models;
+using Repo;
+using System.Collections.Generic;
 
 VizsgaContext tarolo = new VizsgaContext();
 
@@ -20,9 +23,33 @@ else
 
 Console.WriteLine("7. feladat: A 3 legtöbbet kereső idegenvezető:");
 
-var top3 = tarolo.Idegenvezetos.Include(x => x.Uticels).ToList().OrderByDescending(x => x.Bevetel).Take(3);
+var top3 = tarolo.Idegenvezetos
+    .Include(x => x.Uticels).ThenInclude(x => x.Utazas)
+    .ToList().OrderByDescending(x => x.Bevetel).Take(3);
 
 foreach (var item in top3)
 {
     Console.WriteLine($"{item.Nev}: {item.Bevetel} Ft");
 }
+
+Console.WriteLine("\n-------------------------------");
+Console.WriteLine("7. feladat (EF direkt SQL): A 3 legtöbbet kereső idegenvezető:");
+
+// A Top3Dto-t egy osztályként létre kell hozni, betettem a models-be.
+var top3_2 = tarolo.Database
+    .SqlQuery<Top3Dto>($@"
+        select i.nev, sum(i.napidij*ut.idotartam) as bevetel from utazas u 
+            join uticel ut on u.uticel_id = ut.uticel_id 
+            join idegenvezeto i on i.idegenvezeto_id = ut.idegenvezeto_id 
+            GROUP by i.idegenvezeto_id
+            order by bevetel desc, i.nev limit 3")
+    ;
+
+foreach (var item in top3_2)
+{
+    Console.WriteLine($"{item.Nev}: {item.Bevetel} Ft");
+}
+
+
+
+Console.WriteLine($"\n---------------------\n{tarolo.Idegenvezetos.Single(x => x.IdegenvezetoId == 14).Bevetel}, {tarolo.Utazas.Where(x => x.Uticel.IdegenvezetoId == 14).Count()}");

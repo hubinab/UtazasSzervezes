@@ -17,5 +17,5 @@ public partial class Idegenvezeto
 
     public virtual ICollection<Uticel> Uticels { get; set; } = new List<Uticel>();
 
-    public int Bevetel => Uticels.Sum(x => x.Idotartam) * Napidij;
+    public int Bevetel => Uticels.Sum(x => x.OsszUtazas) * Napidij;
 }
